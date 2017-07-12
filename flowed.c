@@ -1,15 +1,22 @@
+#include <ctype.h>
+
 #include "utils.h"
 
 
 int main() {
 	enableRawMode();
 
-	char c;
 	while (true) {
+		char c = '\0';
+
 		_getCharFromStdin(&c);
 
 		if (c == 'q') {
 			break;
+		} else if (iscntrl(c)) {
+			printf("%d\r\n", c);
+		} else {
+			printf("%d ('%c')\r\n", c, c);
 		}
 	}
 

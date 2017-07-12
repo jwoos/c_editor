@@ -7,7 +7,23 @@ void enableRawMode() {
 
 	struct termios raw = originalTermios;
 
-	raw.c_lflag &= ~(ECHO | ICANON);
+	/* ECHO disables echoing
+	 * ICANON allows consuming byte by byte
+	 * ISIG disables ctrl-c and ctrl-z
+	 * IXON disables ctrl-s and ctrl-q
+	 * IEXTEN disables ctrl-v literal sending
+	 * ICRNL fixes ctrl-m
+	 * OPOST fixes the newline translation for output
+	 */
+	raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
+	raw.c_oflag &= ~(OPOST);
+	raw.c_cflag |= (CS8);
+	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+
+	// set read timeout
+	raw.c_cc[VMIN] = 0;
+	raw.c_cc[VTIME] = 1;
+
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
