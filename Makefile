@@ -1,5 +1,4 @@
 CC = gcc
-CC = gcc
 WARNING = -Wall -Wextra
 OPTIMIZE = -O0
 DEBUG = -ggdb
@@ -9,26 +8,35 @@ ARGS = $(WARNING) $(OPTIMIZE) $(DEBUG) $(STD)
 ALL = utils.o
 EXECUTABLES = tester flowed
 
+ifneq ($(RELEASE), 1)
+DEBUG = -ggdb
+OPTIMIZE = -O0
+ALL += debug-utils.o
+else
+OPTIMIZE = -O5
+DEBUG = -g0
+endif
+
 default: clean flowed
 
 test: clean tester
 
-debug: default
+mem-check:
 	valgrind --leak-check=full -v ./flowed
 
 flowed: $(ALL)
 	$(CC) $(ARGS) $@.c $^ -o $@
 
-tester: ${ALL}
-	${CC} ${ARGS} $@.c $^ -o $@
+tester: $(ALL)
+	$(CC) $(ARGS) $@.c $^ -o $@
 
 %.o: %.cpp
-	${CXX} ${ARGS} -c $^ -o $@
+	$(CXX) $(ARGS) -c $^ -o $@
 
-clean: .FORCE force
-	rm ${ALL} ${EXECUTABLES}
+clean: .PHONY force
+	rm $(ALL) $(EXECUTABLES)
 
 force:
-	touch ${ALL} ${EXECUTABLES}
+	touch $(ALL) $(EXECUTABLES)
 
-.FORCE:
+.PHONY:
