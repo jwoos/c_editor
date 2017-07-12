@@ -2,7 +2,10 @@
 
 
 void enableRawMode() {
-	tcgetattr(STDIN_FILENO, &originalTermios);
+	if (tcgetattr(STDIN_FILENO, &originalTermios) == -1) {
+		printError("tcgetattr", true);
+	}
+
 	atexit(disableRawMode);
 
 	struct termios raw = originalTermios;
@@ -24,16 +27,20 @@ void enableRawMode() {
 	raw.c_cc[VMIN] = 0;
 	raw.c_cc[VTIME] = 1;
 
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) {
+		printError("tcsetattr", true);
+	}
 }
 
 void disableRawMode() {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &originalTermios);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &originalTermios) == -1) {
+		printError("tcsetattr", true);
+	}
 }
 
 void writeStdout(char* message, uint32_t bytes) {
 	if (write(STDOUT_FILENO, message, bytes) < 0) {
-		printError("error writing - exiting", 1);
+		printError("write", 1);
 	}
 }
 
@@ -49,8 +56,8 @@ void _getCharFromStdin(char* pc) {
 	char c = *pc;
 	int bytesRead = read(STDIN_FILENO, pc, 1);
 
-	if (bytesRead < 0) {
-		printError("error reading - exiting", true);
+	if (bytesRead == -1 && errno != EAGAIN) {
+		printError("read", true);
 	} else if (bytesRead == 0) {
 		c = '\0';
 	}
@@ -64,7 +71,7 @@ char* readStdin() {
 	char c;
 
 	if (!buffer) {
-		printError("Error allocating", 1);
+		printError("calloc", true);
 	}
 
 	while (1) {
@@ -85,7 +92,7 @@ char* readStdin() {
 			buffer = realloc(buffer, size);
 
 			if (!buffer) {
-				printError("Error allocating", true);
+				printError("realloc", true);
 			}
 		}
 	}
@@ -102,5 +109,5 @@ void printError(char* message, bool shouldExit) {
 }
 
 void flush() {
-	writeStdout("\n", 1);
+	writeStdout("\r\n", 1);
 }

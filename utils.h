@@ -1,6 +1,7 @@
 #ifndef FLOWED_UTILS_H
 #define FLOWED_UTILS_H
 
+#include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
