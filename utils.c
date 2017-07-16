@@ -58,8 +58,6 @@ void _getCharFromStdin(char* pc) {
 
 	if (bytesRead == -1 && errno != EAGAIN) {
 		printError("read", true);
-	} else if (bytesRead == 0) {
-		c = '\0';
 	}
 }
 
@@ -78,7 +76,7 @@ char* readStdin() {
 		c = getCharFromStdin();
 
 		if (c == '\0' && position == 0) {
-			_exit(EXIT_SUCCESS);
+			exit(EXIT_SUCCESS);
 		} if (c == '\n') {
 			buffer[position] = '\0';
 			break;
@@ -104,10 +102,16 @@ void printError(char* message, bool shouldExit) {
 	perror(message);
 
 	if (shouldExit) {
-		_exit(EXIT_FAILURE);
+		refreshScreen();
+		exit(EXIT_FAILURE);
 	}
 }
 
 void flush() {
 	writeStdout("\r\n", 1);
+}
+
+void refreshScreen() {
+	writeStdout("\x1b[2J", 4);
+	writeStdout("\x1b[H", 3);
 }

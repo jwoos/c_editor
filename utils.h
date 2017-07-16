@@ -28,5 +28,7 @@ void printError(char*, bool);
 
 void flush();
 
+void refreshScreen();
+
 
 #endif

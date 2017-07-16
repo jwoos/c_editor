@@ -1,5 +1,6 @@
 #include <ctype.h>
 
+#include "editor.h"
 #include "macros.h"
 #include "utils.h"
 
@@ -8,18 +9,9 @@ int main() {
 	enableRawMode();
 
 	while (true) {
-		char c = '\0';
-
-		_getCharFromStdin(&c);
-
-		if (c == 'q') {
-			break;
-		} else if (iscntrl(c)) {
-			printf("%d\r\n", c);
-		} else {
-			printf("%d ('%c')\r\n", c, c);
-		}
+		char c = getCharFromStdin();
+		processKeyPress(c);
 	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }
