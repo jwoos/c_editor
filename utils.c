@@ -2,13 +2,13 @@
 
 
 void enableRawMode() {
-	if (tcgetattr(STDIN_FILENO, &originalTermios) == -1) {
+	if (tcgetattr(STDIN_FILENO, &E.originalTermios) == -1) {
 		die("tcgetattr");
 	}
 
 	atexit(disableRawMode);
 
-	struct termios raw = originalTermios;
+	struct termios raw = E.originalTermios;
 
 	/* ECHO disables echoing
 	 * ICANON allows consuming byte by byte
@@ -33,7 +33,7 @@ void enableRawMode() {
 }
 
 void disableRawMode() {
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &originalTermios) == -1) {
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.originalTermios) == -1) {
 		die("tcsetattr");
 	}
 }

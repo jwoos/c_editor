@@ -1,6 +1,7 @@
 #ifndef FLOWED_UTILS_H
 #define FLOWED_UTILS_H
 
+
 #include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -10,8 +11,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "global.h"
 
-struct termios originalTermios;
 
 void enableRawMode();
 
