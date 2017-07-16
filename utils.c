@@ -3,7 +3,7 @@
 
 void enableRawMode() {
 	if (tcgetattr(STDIN_FILENO, &originalTermios) == -1) {
-		printError("tcgetattr", true);
+		die("tcgetattr");
 	}
 
 	atexit(disableRawMode);
@@ -28,19 +28,19 @@ void enableRawMode() {
 	raw.c_cc[VTIME] = 1;
 
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) {
-		printError("tcsetattr", true);
+		die("tcsetattr");
 	}
 }
 
 void disableRawMode() {
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &originalTermios) == -1) {
-		printError("tcsetattr", true);
+		die("tcsetattr");
 	}
 }
 
 void writeStdout(char* message, uint32_t bytes) {
 	if (write(STDOUT_FILENO, message, bytes) < 0) {
-		printError("write", 1);
+		die("write");
 	}
 }
 
@@ -57,7 +57,7 @@ void _getCharFromStdin(char* pc) {
 	int bytesRead = read(STDIN_FILENO, pc, 1);
 
 	if (bytesRead == -1 && errno != EAGAIN) {
-		printError("read", true);
+		die("read");
 	}
 }
 
@@ -69,7 +69,7 @@ char* readStdin() {
 	char c;
 
 	if (!buffer) {
-		printError("calloc", true);
+		die("calloc");
 	}
 
 	while (1) {
@@ -90,7 +90,7 @@ char* readStdin() {
 			buffer = realloc(buffer, size);
 
 			if (!buffer) {
-				printError("realloc", true);
+				die("realloc");
 			}
 		}
 	}
@@ -98,13 +98,11 @@ char* readStdin() {
 	return buffer;
 }
 
-void printError(char* message, bool shouldExit) {
-	perror(message);
+void die(char* message) {
+	refreshScreen();
 
-	if (shouldExit) {
-		refreshScreen();
-		exit(EXIT_FAILURE);
-	}
+	perror(message);
+	exit(EXIT_FAILURE);
 }
 
 void flush() {

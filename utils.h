@@ -24,7 +24,7 @@ void _getCharFromStdin(char*);
 
 char* readStdin();
 
-void printError(char*, bool);
+void die(char*);
 
 void flush();
 
