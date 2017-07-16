@@ -107,13 +107,13 @@ char* readStdin() {
 }
 
 void die(char* message) {
-	refreshScreen();
+	_refreshScreen();
 
 	perror(message);
 	exit(EXIT_FAILURE);
 }
 
-void refreshScreen() {
+void _refreshScreen() {
 	writeStdout("\x1b[2J", 4, false);
 	writeStdout("\x1b[H", 3, false);
 }

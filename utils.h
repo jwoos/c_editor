@@ -29,7 +29,7 @@ void die(char*);
 
 void flush();
 
-void refreshScreen();
+void _refreshScreen();
 
 
 #endif
