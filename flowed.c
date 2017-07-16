@@ -7,8 +7,10 @@
 
 int main() {
 	enableRawMode();
+	initialize();
 
 	while (true) {
+		refreshScreen();
 		char c = getCharFromStdin();
 		processKeyPress(c);
 	}

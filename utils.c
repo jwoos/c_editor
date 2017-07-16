@@ -38,9 +38,13 @@ void disableRawMode() {
 	}
 }
 
+// TODO
+void concatArr(void* dest, void* addon) {}
+
 void writeStdout(char* message, uint32_t bytes, bool newLine) {
 	if (newLine) {
-		char buffer[bytes + 2];
+		bytes += 2;
+		char buffer[bytes];
 
 		strcat(buffer, message);
 		strcat(buffer, "\r\n");
@@ -116,4 +120,16 @@ void die(char* message) {
 void _refreshScreen() {
 	writeStdout("\x1b[2J", 4, false);
 	writeStdout("\x1b[H", 3, false);
+}
+
+int getWindowSize(int* rows, int* cols) {
+	struct winsize ws;
+
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
+		return -1;
+	} else {
+		*cols = ws.ws_col;
+		*rows = ws.ws_row;
+		return 0;
+	}
 }

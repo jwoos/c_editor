@@ -15,7 +15,13 @@ void refreshScreen() {
 }
 
 void drawRows() {
-	for (int y = 0; y < 24; y++) {
+	for (int y = 0; y < E.screenRows; y++) {
 		writeStdout("~", 1, true);
+	}
+}
+
+void initialize() {
+	if (getWindowSize(&E.screenRows, &E.screenCols) == -1) {
+		die("getWindowSize");
 	}
 }

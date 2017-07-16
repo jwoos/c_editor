@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
 
@@ -17,6 +18,8 @@
 void enableRawMode();
 
 void disableRawMode();
+
+void concatArr(void*, void*);
 
 void writeStdout(char*, uint32_t, bool);
 
@@ -31,6 +34,8 @@ void die(char*);
 void flush();
 
 void _refreshScreen();
+
+int getWindowSize(int*, int*);
 
 
 #endif

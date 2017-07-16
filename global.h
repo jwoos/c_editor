@@ -7,6 +7,8 @@
 
 struct Config {
 	struct termios originalTermios;
+	int screenRows;
+	int screenCols;
 } E;
 
 
