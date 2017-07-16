@@ -38,7 +38,15 @@ void disableRawMode() {
 	}
 }
 
-void writeStdout(char* message, uint32_t bytes) {
+void writeStdout(char* message, uint32_t bytes, bool newLine) {
+	if (newLine) {
+		char buffer[bytes + 2];
+
+		strcat(buffer, message);
+		strcat(buffer, "\r\n");
+		message = buffer;
+	}
+
 	if (write(STDOUT_FILENO, message, bytes) < 0) {
 		die("write");
 	}
@@ -105,11 +113,7 @@ void die(char* message) {
 	exit(EXIT_FAILURE);
 }
 
-void flush() {
-	writeStdout("\r\n", 1);
-}
-
 void refreshScreen() {
-	writeStdout("\x1b[2J", 4);
-	writeStdout("\x1b[H", 3);
+	writeStdout("\x1b[2J", 4, false);
+	writeStdout("\x1b[H", 3, false);
 }

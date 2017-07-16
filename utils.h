@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <termios.h>
 #include <unistd.h>
 
@@ -16,7 +17,7 @@ void enableRawMode();
 
 void disableRawMode();
 
-void writeStdout(char*, uint32_t);
+void writeStdout(char*, uint32_t, bool);
 
 char getCharFromStdin();
 
