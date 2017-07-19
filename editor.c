@@ -3,7 +3,17 @@
 void processKeyPress(char c) {
 	switch (c) {
 		case CTRL_KEY('q'):
+			writeStdout("\x1b[2J", 4, false);
+			writeStdout("\x1b[H", 3, false);
 			exit(EXIT_SUCCESS);
+			break;
+
+		case 'h':
+		case 'l':
+		case 'j':
+		case 'k':
+			moveCursor(c);
+			break;
 	}
 }
 
@@ -15,7 +25,10 @@ void refreshScreen() {
 
 	drawRows(&ab);
 
-	abAppend(&ab, "\x1b[H", 3);
+	char buf[32];
+	snprintf(buf, sizeof(buf), "\x1b[%d;%dH", E.cy + 1, E.cx + 1);
+	abAppend(&ab, buf, strlen(buf));
+
 	abAppend(&ab, "\x1b[?25h", 6);
 
 	writeStdout(ab.b, ab.len, false);
@@ -60,7 +73,27 @@ void drawRows(AppendBuffer* ab) {
 }
 
 void initialize() {
+	E.cx = 0;
+	E.cy = 0;
+
 	if (getWindowSize(&E.screenRows, &E.screenCols) == -1) {
 		die("getWindowSize");
+	}
+}
+
+void moveCursor(char key) {
+	switch (key) {
+		case 'h':
+			E.cx--;
+			break;
+		case 'l':
+			E.cx++;
+			break;
+		case 'j':
+			E.cy++;
+			break;
+		case 'k':
+			E.cy--;
+			break;
 	}
 }

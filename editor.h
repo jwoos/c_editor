@@ -20,5 +20,7 @@ void drawRows(AppendBuffer*);
 
 void initialize();
 
+void moveCursor(char);
+
 
 #endif

@@ -9,6 +9,8 @@ struct Config {
 	struct termios originalTermios;
 	int screenRows;
 	int screenCols;
+	int cx;
+	int cy;
 } E;
 
 
