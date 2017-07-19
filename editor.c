@@ -8,15 +8,28 @@ void processKeyPress(char c) {
 }
 
 void refreshScreen() {
-	_refreshScreen();
+	AppendBuffer ab = ABUF_INIT;
 
-	drawRows();
-	writeStdout("\x1b[H", 3, false);
+	abAppend(&ab, "\x1b[?25l", 6);
+	abAppend(&ab, "\x1b[h", 3);
+
+	drawRows(&ab);
+
+	abAppend(&ab, "\x1b[H", 3);
+	abAppend(&ab, "\x1b[?25h", 6);
+
+	writeStdout(ab.b, ab.len, false);
+	abFree(&ab);
 }
 
-void drawRows() {
+void drawRows(AppendBuffer* ab) {
 	for (int y = 0; y < E.screenRows; y++) {
-		writeStdout("~", 1, true);
+		abAppend(ab, "~", 1);
+
+		abAppend(ab, "\x1b[K", 3);
+		if (y < E.screenRows - 1) {
+			abAppend(ab, "\r\n", 2);
+		}
 	}
 }
 

@@ -5,7 +5,7 @@ DEBUG = -ggdb
 STD = -std=gnu11
 ARGS = $(WARNING) $(OPTIMIZE) $(DEBUG) $(STD)
 
-ALL = utils.o editor.o
+ALL = utils.o editor.o buffer.o
 EXECUTABLES = tester flowed
 
 ifneq ($(RELEASE), 1)

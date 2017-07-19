@@ -2,6 +2,7 @@
 #define FLOWED_UTILS_H
 
 
+#include <ctype.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -12,6 +13,7 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "buffer.h"
 #include "global.h"
 
 
@@ -21,7 +23,7 @@ void disableRawMode();
 
 void concatArr(void*, void*);
 
-void writeStdout(char*, uint32_t, bool);
+int writeStdout(char*, uint32_t, bool);
 
 char getCharFromStdin();
 
