@@ -24,7 +24,33 @@ void refreshScreen() {
 
 void drawRows(AppendBuffer* ab) {
 	for (int y = 0; y < E.screenRows; y++) {
-		abAppend(ab, "~", 1);
+		if (y == E.screenRows / 3) {
+			char welcome[80];
+			int welcomeLen = snprintf(
+				welcome,
+				sizeof(welcome),
+				"Flowed -- version %s",
+				FLOWED_VERSION
+			);
+
+			if (welcomeLen > E.screenCols) {
+				welcomeLen = E.screenCols;
+			}
+
+			int padding = (E.screenCols - welcomeLen) / 2;
+			if (padding) {
+				abAppend(ab, "~", 1);
+				padding--;
+			}
+
+			while (padding--) {
+				abAppend(ab, " ", 1);
+			}
+
+			abAppend(ab, welcome, welcomeLen);
+		} else {
+			abAppend(ab, "~", 1);
+		}
 
 		abAppend(ab, "\x1b[K", 3);
 		if (y < E.screenRows - 1) {
