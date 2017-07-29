@@ -29,7 +29,6 @@ int main() {
 				case TB_KEY_ARROW_LEFT:
 				case TB_KEY_ARROW_RIGHT:
 					moveCursor(event.key);
-					break;
 			}
 		}
 	};

@@ -16,30 +16,33 @@ void init() {
 
 void moveCursor(uint16_t direction) {
 	switch (direction) {
-		case TB_KEY_ARROW_DOWN:
-			if (Config.cy != Config.rows - 1) {
-				Config.cy++;
-			}
-
 		case TB_KEY_ARROW_UP:
 			if (Config.cy != 0) {
 				Config.cy--;
 			}
+			break;
 
 		case TB_KEY_ARROW_LEFT:
 			if (Config.cx != 0) {
 				Config.cx--;
 			}
+			break;
+
+		case TB_KEY_ARROW_DOWN:
+			if (Config.cy != Config.rows - 1) {
+				Config.cy++;
+			}
+			break;
 
 		case TB_KEY_ARROW_RIGHT:
 			if (Config.cx != Config.cols - 1) {
 				Config.cx++;
 			}
-
-		default:
-			tb_set_cursor(Config.cx, Config.cy);
-			tb_present();
+			break;
 	}
+
+	tb_set_cursor(Config.cx, Config.cy);
+	tb_present();
 }
 
 void showLetter(uint32_t ch) {
