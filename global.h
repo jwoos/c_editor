@@ -10,6 +10,8 @@
 struct Config {
 	int cols;
 	int rows;
+	int cx;
+	int cy;
 } Config;
 
 
