@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <termbox.h>
 
 #include "editor.h"
 #include "macros.h"
@@ -6,14 +7,8 @@
 
 
 int main() {
-	enableRawMode();
-	initialize();
-
-	while (true) {
-		refreshScreen();
-		char c = getCharFromStdin();
-		processKeyPress(c);
-	}
+	tb_init();
+	tb_shutdown();
 
 	return EXIT_SUCCESS;
 }
