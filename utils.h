@@ -2,26 +2,17 @@
 #define FLOWED_UTILS_H
 
 
-#include <ctype.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/ioctl.h>
-#include <termios.h>
 #include <unistd.h>
 
 #include "buffer.h"
 #include "global.h"
 
-
-void enableRawMode();
-
-void disableRawMode();
-
-void concatArr(void*, void*);
 
 int writeStdout(char*, uint32_t, bool);
 
@@ -34,10 +25,6 @@ char* readStdin();
 void die(char*);
 
 void flush();
-
-void _refreshScreen();
-
-int getWindowSize(int*, int*);
 
 
 #endif

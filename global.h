@@ -2,16 +2,15 @@
 #define FLOWED_GLOBAL_H
 
 
-#include <termios.h>
+#define FLOWED_VERSION "0.0.1"
 
+#define CTRL_KEY(k) ((k) & 0x1f)
+#define ABUF_INIT {NULL, 0}
 
 struct Config {
-	struct termios originalTermios;
-	int screenRows;
-	int screenCols;
-	int cx;
-	int cy;
-} E;
+	int cols;
+	int rows;
+} Config;
 
 
 #endif
