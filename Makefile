@@ -1,5 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -std=gnu11 -ggdb -O0
+WARNINGS_ERRORS = -Wall
+STANDARD = -std=gnu11
+OPTIMIZE = -O0
+DEBUG = -ggdb
 LDLIBS = -ltermbox
 
 ALL = utils.o editor.o buffer.o
@@ -12,6 +15,9 @@ else
 OPTIMIZE = -O5
 DEBUG = -g0
 endif
+
+CFLAGS = $(WARNINGS_ERRORS) $(STANDARD) $(DEBUG) $(OPTIMIZE)
+
 
 default: clean flowed
 
