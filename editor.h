@@ -3,13 +3,18 @@
 
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <termbox.h>
 
 #include "global.h"
 #include "utils.h"
 
 
-void init();
+void initTermbox();
+
+struct tb_event pollEvent();
+
+struct tb_event peekEvent(uint32_t);
 
 void moveCursor(uint16_t);
 

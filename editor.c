@@ -1,7 +1,7 @@
 #include "editor.h"
 
 
-void init() {
+void initTermbox() {
 	tb_init();
 	tb_select_output_mode(TB_OUTPUT_NORMAL);
 
@@ -12,6 +12,31 @@ void init() {
 
 	Config.cols = tb_width();
 	Config.rows = tb_height();
+
+	// register exit handler
+	atexit(tb_shutdown);
+
+	tb_present();
+}
+
+struct tb_event pollEvent() {
+	struct tb_event event;
+
+	if (tb_poll_event(&event) < 0) {
+		die("tb_poll_event");
+	}
+
+	return event;
+}
+
+struct tb_event peekEvent(uint32_t timeout) {
+	struct tb_event event;
+
+	if (tb_peek_event(&event, timeout) < 0) {
+		die("tb_peek_event");
+	}
+
+	return event;
 }
 
 void moveCursor(uint16_t direction) {

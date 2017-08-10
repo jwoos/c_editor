@@ -29,7 +29,6 @@ char getCharFromStdin() {
 }
 
 void _getCharFromStdin(char* pc) {
-	char c = *pc;
 	int bytesRead = read(STDIN_FILENO, pc, 1);
 
 	if (bytesRead == -1 && errno != EAGAIN) {

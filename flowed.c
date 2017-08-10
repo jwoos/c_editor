@@ -7,9 +7,7 @@
 
 
 int main() {
-	init();
-
-	tb_present();
+	initTermbox();
 
 	struct tb_event event;
 	int status;
