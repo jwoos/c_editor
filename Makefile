@@ -1,35 +1,25 @@
 CC = gcc
-WARNINGS_ERRORS = -Wall
-STANDARD = -std=gnu11
-OPTIMIZE = -O0
-DEBUG = -ggdb
+CFLAGS = -Wall -Wextra -std=gnu11 -ggdb -O0
 LDLIBS = -ltermbox
+LDFLAGS =
 
-ALL = utils.o editor.o buffer.o
+OBJECTS = buffer.o editor.o utils.o
 EXECUTABLES = flowed
-
-ifneq ($(RELEASE), 1)
-DEBUG = -ggdb
-OPTIMIZE = -O0
-else
-OPTIMIZE = -O5
-DEBUG = -g0
-endif
-
-CFLAGS = $(WARNINGS_ERRORS) $(STANDARD) $(DEBUG) $(OPTIMIZE)
-
 
 default: clean flowed
 
-mem-check:
-	valgrind --leak-check=full -v ./flowed
+# implicit rule for %.o
+# $(CC) $(CPPFLAGS) $(CFLAGS) -c $@
 
-flowed: $(ALL)
+flowed: ${OBJECTS}
+	$(CC) flowed.c $^ $(LDFLAGS) $(LDLIBS) -o $@
 
-clean: .PHONY force
-	rm $(ALL) $(EXECUTABLES)
+objects: ${OBJECTS}
 
-force:
-	touch $(ALL) $(EXECUTABLES)
+clean-objects:
+	touch ${OBJECTS} && rm ${OBJECTS}
 
-.PHONY:
+clean-executables:
+	touch ${EXECUTABLES} && rm ${EXECUTABLES}
+
+clean: clean-objects clean-executables

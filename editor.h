@@ -10,9 +10,9 @@
 #include "utils.h"
 
 
-void initTermbox();
+void initTermbox(void);
 
-struct tb_event pollEvent();
+struct tb_event pollEvent(void);
 
 struct tb_event peekEvent(uint32_t);
 

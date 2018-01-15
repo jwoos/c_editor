@@ -1,7 +1,7 @@
 #include "editor.h"
 
 
-void initTermbox() {
+void initTermbox(void) {
 	tb_init();
 	tb_select_output_mode(TB_OUTPUT_NORMAL);
 
@@ -19,7 +19,7 @@ void initTermbox() {
 	tb_present();
 }
 
-struct tb_event pollEvent() {
+struct tb_event pollEvent(void) {
 	struct tb_event event;
 
 	if (tb_poll_event(&event) < 0) {

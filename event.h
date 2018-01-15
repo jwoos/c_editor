@@ -1,6 +1,7 @@
 #ifndef FLOWED_EVENT_H
 #define FLOWED_EVENT_H
 
+
 #include <termbox.h>
 
 #include "global.h"

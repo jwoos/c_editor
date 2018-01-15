@@ -7,6 +7,7 @@
 #define CTRL_KEY(k) ((k) & 0x1f)
 #define ABUF_INIT {NULL, 0}
 
+
 struct Config {
 	int cols;
 	int rows;
