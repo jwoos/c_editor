@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <termbox.h>
+
+#include "vendor/termbox/termbox.h"
 
 #include "editor.h"
 #include "global.h"

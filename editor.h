@@ -4,7 +4,8 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include <termbox.h>
+
+#include "vendor/termbox/termbox.h"
 
 #include "global.h"
 #include "utils.h"
