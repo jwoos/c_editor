@@ -76,3 +76,10 @@ void showLetter(uint32_t ch) {
 	tb_set_cursor(Config.cx, Config.cy);
 	tb_present();
 }
+
+void newLine(void) {
+	Config.cx = 0;
+	Config.cy++;
+	tb_set_cursor(Config.cx, Config.cy);
+	tb_present();
+}

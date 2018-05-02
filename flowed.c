@@ -22,6 +22,18 @@ int main() {
 					status = -1;
 					break;
 
+				case TB_KEY_SPACE:
+					showLetter(' ');
+					break;
+
+				case TB_KEY_TAB:
+					showLetter('\t');
+					break;
+
+				case TB_KEY_ENTER:
+					newLine();
+					break;
+
 				case TB_KEY_ARROW_UP:
 				case TB_KEY_ARROW_DOWN:
 				case TB_KEY_ARROW_LEFT:
