@@ -31,8 +31,6 @@ int main() {
 		}
 	};
 
-	tb_shutdown();
-
 	printf("%d\n", Config.cx);
 	printf("%d\n", Config.cy);
 
