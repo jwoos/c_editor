@@ -5,15 +5,18 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "utils.h"
 
-typedef struct AppendBuffer {
-	char* b;
-	int len;
-} AppendBuffer;
 
-void abAppend(AppendBuffer*, const char*, int);
+typedef struct Buffer {
+	char** lines;
+	uint64_t size;
+};
 
-void abFree(AppendBuffer*);
+
+Buffer* bufferConstruct(uint64_t);
+
+void bufferDeconstruct(Buffer*);
 
 
 #endif
